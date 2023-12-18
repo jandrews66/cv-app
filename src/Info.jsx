@@ -10,7 +10,12 @@ export default function InfoForm(){
 
    const [submittedInfo, setSubmittedInfo] = useState([user.fullName, user.email, user.telephone])
 
+   const [editMode, setEditMode] = useState(false)
    
+   function toggleEdit(){
+        setEditMode(!editMode)
+   }
+
    function handleChange(e){
         setUser({
             ...user,
@@ -21,31 +26,32 @@ export default function InfoForm(){
     function handleSubmit(e){
         e.preventDefault();
         setSubmittedInfo([user.fullName, user.email, user.telephone])
-
+        toggleEdit()
     }
-
 
     return (
         <>
         <ul>
-        {submittedInfo.map((info) => {
-            return <li key={info}>{info}</li>;
+        {submittedInfo.map((info, index) => {
+            return <li key={index}>{info}</li>;
         })}
         </ul>
-        <form onSubmit={handleSubmit}>
-            <h1>Basic Info</h1>
-        
+        {!editMode &&
+            <button onClick={toggleEdit}>Edit</button>
+        }
+        {editMode &&
+            <form onSubmit={handleSubmit}>        
             <label>
-                Full Name:{""}
+                Full Name:
                 <input
                     name="fullName" 
                     type="text"
-                    value={"user.fullName"}
+                    value={user.fullName}
                     onChange={handleChange}
                 />
             </label>
             <label>
-                Email:{""}
+                Email:
                 <input 
                     name="email"
                     type="email"
@@ -55,7 +61,7 @@ export default function InfoForm(){
                 />
             </label>
             <label>
-                Telephone:{""}
+                Telephone:
                 <input 
                     name="telephone"
                     type="text"
@@ -65,7 +71,8 @@ export default function InfoForm(){
                 />
             </label>
             <button>Submit</button>
-        </form> 
+        </form>     
+        }
         </>
    
     )
