@@ -5,7 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 export default function ExperienceSection(){
 
     const [experience, setExperience] = useState({
-        id: "",
+        //give each experience a unique id
+        id: uuidv4(),
         jobTitle: "",
         company: "",
         startDate: "",
@@ -24,13 +25,20 @@ export default function ExperienceSection(){
 
     function handleSubmit(e){
         e.preventDefault();
-        //give the experience a unique key
-        setExperience(experience.id = uuidv4())
-        //add all exisiting experiences to submitted info. Then add the new experience and render
-        setSubmittedInfo([...submittedInfo, experience])
+        
+        // if statemenet to check if the form is Editing an existing experience.
+        // if experience.id matches an id in the submitted info array, remove the experience objected from the array
+        if (submittedInfo.find((element) => element.id == experience.id)){
+            const newList = submittedInfo.filter((item)=> item.id !== experience.id);
+            setSubmittedInfo([...newList, experience])
+        //else add the new experience to the submitted info array
+        } else {
+            setSubmittedInfo([...submittedInfo, experience])
+        }
+
         //clear form 
         setExperience({
-            id: "",
+            id: uuidv4(),
             jobTitle: "",
             company: "",
             startDate: "",
