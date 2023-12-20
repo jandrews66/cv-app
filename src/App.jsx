@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import './App.css'
-import BasicInfo from './BasicInfo'
 import InfoForm from './Info'
 import ExperienceSection from './Experience'
 
