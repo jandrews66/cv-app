@@ -36,7 +36,18 @@ export default function ExperienceSection(){
             description: ""
         })
     }
+/* 
+    function handleEdit(selectedId){
+       let obj = submittedInfo.filter(info => info.id == selectedId)
+       setExperience(obj[0])
+    } */
 
+    function handleRemove(selectedId){
+        // create a new list which does not contain the Item matching the selected Id 
+        const newList = submittedInfo.filter((item)=> item.id !== selectedId);
+        //change the state of submitted info to render the new list
+        setSubmittedInfo(newList);
+    }
     return (
         <>
         <h1>Experience</h1>
@@ -95,6 +106,7 @@ export default function ExperienceSection(){
                 <p>{info.jobTitle} at {info.company}</p>
                 <p>From {info.startDate} to {info.endDate}</p>
                 <p>{info.description}</p>
+                <button type='button' onClick={() => handleRemove(info.id)}>Remove</button>
             </li>;
         })}
         </ul>
