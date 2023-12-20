@@ -24,9 +24,11 @@ export default function ExperienceSection(){
 
     function handleSubmit(e){
         e.preventDefault();
-        //give each experience a unique key
+        //give the experience a unique key
         setExperience(experience.id = uuidv4())
+        //add all exisiting experiences to submitted info. Then add the new experience and render
         setSubmittedInfo([...submittedInfo, experience])
+        //clear form 
         setExperience({
             id: "",
             jobTitle: "",
@@ -35,19 +37,21 @@ export default function ExperienceSection(){
             endDate: "",
             description: ""
         })
-    }
-/* 
-    function handleEdit(selectedId){
-       let obj = submittedInfo.filter(info => info.id == selectedId)
-       setExperience(obj[0])
-    } */
 
+    }
+
+    function handleEdit(selectedId){
+        let obj = submittedInfo.filter(info => info.id == selectedId)
+        setExperience(obj[0])
+    } 
+ 
     function handleRemove(selectedId){
         // create a new list which does not contain the Item matching the selected Id 
         const newList = submittedInfo.filter((item)=> item.id !== selectedId);
         //change the state of submitted info to render the new list
         setSubmittedInfo(newList);
     }
+
     return (
         <>
         <h1>Experience</h1>
@@ -106,6 +110,7 @@ export default function ExperienceSection(){
                 <p>{info.jobTitle} at {info.company}</p>
                 <p>From {info.startDate} to {info.endDate}</p>
                 <p>{info.description}</p>
+                <button type='button' onClick={() => handleEdit(info.id)}>Edit</button>
                 <button type='button' onClick={() => handleRemove(info.id)}>Remove</button>
             </li>;
         })}
