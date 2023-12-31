@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-
 export default function ExperienceSection(){
 
     const [experience, setExperience] = useState({
@@ -16,6 +15,12 @@ export default function ExperienceSection(){
 
    const [submittedInfo, setSubmittedInfo] = useState([])
 
+   const [displayForm, setDisplayForm] = useState(false)
+
+   function toggleForm(){
+        setDisplayForm(!displayForm)
+   }
+
    function handleChange(e){
     setExperience({
         ...experience,
@@ -25,17 +30,17 @@ export default function ExperienceSection(){
 
     function handleSubmit(e){
         e.preventDefault();
-        
         // if statemenet to check if the form is Editing an existing experience.
-        // if experience.id matches an id in the submitted info array, remove the experience objected from the array
+        // if experience.id matches an element with the same id in the submitted info array,
         if (submittedInfo.find((element) => element.id == experience.id)){
+            //create a new array without that element
             const newList = submittedInfo.filter((item)=> item.id !== experience.id);
+            //add the experience to the new array and render
             setSubmittedInfo([...newList, experience])
-        //else add the new experience to the submitted info array
+        //else add the new experience to the exisiting submitted info array
         } else {
             setSubmittedInfo([...submittedInfo, experience])
         }
-
         //clear form 
         setExperience({
             id: uuidv4(),
@@ -45,6 +50,7 @@ export default function ExperienceSection(){
             endDate: "",
             description: ""
         })
+        toggleForm();
 
     }
 
@@ -60,12 +66,22 @@ export default function ExperienceSection(){
         setSubmittedInfo(newList);
     }
 
+
+    function reverseString(dateString){
+        //change from YYYY-MM-DD to DD-MM-YYYY
+        return dateString.split("-").reverse().join("-")
+    }
+
     return (
         <>
         <h1>Experience</h1>
-        <form onSubmit={handleSubmit}>
+        {!displayForm &&
+            <button onClick={toggleForm}>Add Experience</button>
+        }
+        {displayForm && 
+            <form onSubmit={handleSubmit}>
             <label>
-                Job Title:{""}
+                Job Title:
                 <input 
                     name="jobTitle"
                     type="text"
@@ -74,7 +90,7 @@ export default function ExperienceSection(){
                 />
             </label>
             <label>
-                Company:{""}
+                Company:
                 <input 
                     name="company"
                     type="text"
@@ -83,7 +99,7 @@ export default function ExperienceSection(){
                 />
             </label>
             <label>
-                Start Date:{""}
+                Start Date:
                 <input 
                     name="startDate"
                     type="date"
@@ -92,7 +108,7 @@ export default function ExperienceSection(){
                 />
             </label>
             <label>
-                End Date:{""}
+                End Date:
                 <input 
                     name="endDate"
                     type="date"
@@ -101,8 +117,8 @@ export default function ExperienceSection(){
                 />
             </label>
             <label>
-                Description:{""}
-                <input 
+                Description:
+                <textarea 
                     name="description"
                     type="text"
                     value={experience.description}
@@ -111,13 +127,26 @@ export default function ExperienceSection(){
             </label>
             <button>Submit</button>
         </form>
+        }
+
         <ul>
-        {submittedInfo.map((info) => {
+        {submittedInfo
+        //sort job experiences from most recent to least recent
+        .sort((a, b) => (b.endDate > a.endDate) ? 1 : (b.endDate < a.endDate) ? -1 : 0)
+        //render experiences
+        .map((info) => {
             return <li key={info.id}>
-                <p>{info.id}</p>
                 <p>{info.jobTitle} at {info.company}</p>
-                <p>From {info.startDate} to {info.endDate}</p>
-                <p>{info.description}</p>
+                <p>From {reverseString(`${info.startDate}`)} to {reverseString(`${info.endDate}`)}</p>
+                {/* render line breaks from description text area*/}
+                <p>{info.description.split("\n").map(function(item, index){
+                    return (
+                        <span key={index}>
+                            {item}
+                            <br/>
+                        </span>
+                    )
+                })}</p>
                 <button type='button' onClick={() => handleEdit(info.id)}>Edit</button>
                 <button type='button' onClick={() => handleRemove(info.id)}>Remove</button>
             </li>;
