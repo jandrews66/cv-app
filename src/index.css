@@ -13,7 +13,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.container{
+.container {
+  display: grid;
+  grid-template-columns: 1fr 550px;
+  border: 2px solid red;
+}
+
+.previewSection{
+  border: 2px solid green;
+  width: 100%;
+  background-color: rgb(238, 235, 235);
 }
 
 a {
