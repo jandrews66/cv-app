@@ -3,9 +3,9 @@ import { useState } from 'react';
 export default function InfoForm(){
    
    const [user, setUser] = useState({
-        fullName: "Joe Bloggs",
-        email: "joebloggs@gmail.com",
-        telephone: "203030322"
+        fullName: "",
+        email: "",
+        telephone: ""
    })
 
    const [submittedInfo, setSubmittedInfo] = useState([user.fullName, user.email, user.telephone])
@@ -37,7 +37,7 @@ export default function InfoForm(){
         })}
         </ul>
         {!editMode &&
-            <button onClick={toggleEdit}>Edit</button>
+            <button onClick={toggleEdit}>Add Info</button>
         }
         {editMode &&
             <form onSubmit={handleSubmit}>        
