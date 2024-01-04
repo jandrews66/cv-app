@@ -28,12 +28,16 @@ function App() {
 
   const [expArray, setExpArray] = useState([])
 
+  const [showExpForm, setShowExpForm] = useState(false)
+
+
   function reverseString(dateString){
     //change from YYYY-MM-DD to DD-MM-YYYY
     return dateString.split("-").reverse().join("-")
   }
 
   function handleEdit(selectedId){
+  setShowExpForm(true)
   let obj = expArray.filter(info => info.id == selectedId)
   setExperience(obj[0])
   } 
@@ -57,6 +61,8 @@ function App() {
   })
 
   const [eduArray, setEduArray] = useState([])
+  const [showEduForm, setShowEduForm] = useState(false)
+
 
   function handleEduEdit(selectedId){
     let obj = eduArray.filter(info => info.id == selectedId)
@@ -74,8 +80,8 @@ function App() {
       <div className="inputSection">
         <h1>CV Generator</h1>
         <InfoForm user={user} setUser={setUser} />
-        <ExperienceSection experience={experience} setExperience={setExperience} expArray={expArray} setExpArray={setExpArray}/>
-        <EducationSection education={education} setEducation={setEducation} eduArray={eduArray} setEduArray={setEduArray}/>
+        <ExperienceSection experience={experience} setExperience={setExperience} expArray={expArray} setExpArray={setExpArray} showExpForm={showExpForm} setShowExpForm={setShowExpForm}/>
+        <EducationSection education={education} setEducation={setEducation} eduArray={eduArray} setEduArray={setEduArray} showEduForm={showEduForm} setShowEduForm={setShowEduForm}/>
       </div>
       <div className="previewSection">
         {!!user.isSubmitted && (

@@ -1,13 +1,10 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-export default function EducationSection({education, setEducation, eduArray, setEduArray}){
-
-
-   const [displayForm, setDisplayForm] = useState(false)
+export default function EducationSection({education, setEducation, eduArray, setEduArray, showEduForm, setShowEduForm}){
 
    function toggleForm(){
-        setDisplayForm(!displayForm)
+        setShowEduForm(!showEduForm)
    }
 
    function handleChange(e){
@@ -46,10 +43,10 @@ export default function EducationSection({education, setEducation, eduArray, set
     return (
         <>
         <h1>Education</h1>
-        {!displayForm &&
+        {!showEduForm &&
             <button onClick={toggleForm}>Add Education</button>
         }
-        {displayForm && 
+        {showEduForm && 
             <form onSubmit={handleSubmit}>
             <label>
                 Type of Education:

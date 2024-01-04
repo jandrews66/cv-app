@@ -3,13 +3,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { format, parse } from 'date-fns';
 
 
-export default function ExperienceSection({experience, setExperience, expArray, setExpArray}){
-
-
-   const [displayForm, setDisplayForm] = useState(false)
+export default function ExperienceSection({experience, setExperience, expArray, setExpArray, showExpForm, setShowExpForm}){
 
    function toggleForm(){
-        setDisplayForm(!displayForm)
+        setShowExpForm(!showExpForm)
    }
 
    function handleChange(e){
@@ -42,7 +39,6 @@ export default function ExperienceSection({experience, setExperience, expArray, 
             description: ""
         })
         toggleForm();
-
     }
 
 
@@ -50,10 +46,10 @@ export default function ExperienceSection({experience, setExperience, expArray, 
     return (
         <>
         <h1>Experience</h1>
-        {!displayForm &&
+        {!showExpForm &&
             <button onClick={toggleForm}>Add Experience</button>
         }
-        {displayForm && 
+        {showExpForm && 
             <form onSubmit={handleSubmit}>
             <label>
                 Job Title:

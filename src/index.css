@@ -15,7 +15,7 @@
 
 .container {
   display: grid;
-  grid-template-columns: 1fr 550px;
+  grid-template-columns: 1fr 2fr;
   border: 2px solid red;
 }
 
