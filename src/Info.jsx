@@ -39,12 +39,6 @@ export default function InfoForm({ user, setUser }) {
 
     return (
         <>
-            {!!user.isSubmitted &&
-                (<ul>
-                    {Object.values(user).map((info, index) => {
-                        return <li key={index}>{info}</li>;
-                    })}
-                </ul>)}
             {!editMode &&
                 <button onClick={toggleEdit}>Add Info</button>
             }
