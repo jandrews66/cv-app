@@ -27,8 +27,12 @@
 .previewSection{
   border: 2px solid green;
   width: 100%;
-  background-color: rgb(238, 235, 235);
   font-size: 0.75em;
+}
+
+.inputSection{
+  background-color: rgb(234, 234, 234);
+
 }
 
 .header{
@@ -43,7 +47,24 @@
   gap: 1em;
 }
 .inputSection > *{
-  margin: 1em;
+  margin: 1em 2em;
+
+
+}
+
+form > label {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 0 50px;
+
+}
+
+input {
+  background-color: rgb(255, 255, 255);
+  border: none;
+  padding: 0.75em;
+  border-radius: 10px;
 }
 
 a {
@@ -68,6 +89,7 @@ h1 {
 }
 
 button {
+  background-color: rgb(151, 185, 181);
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -76,6 +98,7 @@ button {
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
+  margin: 1em;
 }
 button:hover {
   border-color: #646cff;
@@ -129,4 +152,13 @@ h2 {
   color: red;
   padding: 0;
   margin-left: 1em;
+}
+
+.error {
+  color: red;
+}
+
+textarea {
+  min-height: 5em;
+  padding: 0.5em;
 }

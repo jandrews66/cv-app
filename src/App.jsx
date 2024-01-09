@@ -14,6 +14,7 @@ function App() {
     telephone: "",
     address: "",
     isSubmitted: false,
+    isValid: false
   })
 
   const [showInfoForm, setShowInfoForm] = useState(false)

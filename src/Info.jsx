@@ -12,6 +12,7 @@ export default function InfoForm({ user, setUser, showInfoForm, setShowInfoForm 
     // using an isSubmitted value in state now - works for this use case - but ususally form submissions would be storing data/redirecting somewhere etc...
     // const [submittedInfo, setSubmittedInfo] = useState([user.fullName, user.email, user.telephone])
 
+    const [errorMsg, setErrorMsg] = useState("")
 
     function toggleEdit() {
         setShowInfoForm(!showInfoForm)
@@ -26,14 +27,18 @@ export default function InfoForm({ user, setUser, showInfoForm, setShowInfoForm 
 
     function handleSubmit(e) {
         e.preventDefault();
-        // setSubmittedInfo([user.fullName, user.email, user.telephone])
-        // using user useState from top level parent component (App.js)
-        // just setting isSubmitted true to render <ul> below and in preview
-        setUser({
-            ...user,
-            isSubmitted: true,
-        })
-        toggleEdit()
+        if ((user.fullName.length === 0) || (user.email.length === 0) || (user.telephone.length === 0) || (user.address.length === 0)){
+            setErrorMsg("Please complete all form fields")
+        } else {
+            setUser({
+                ...user,
+                isSubmitted: true,
+            })
+            toggleEdit()
+            setErrorMsg("")
+
+        }
+
     }
 
     return (
@@ -85,6 +90,8 @@ export default function InfoForm({ user, setUser, showInfoForm, setShowInfoForm 
 
                         />
                     </label>
+                    <div className="error">{errorMsg}</div>
+
                     <button>Submit</button>
                 </form>
             }

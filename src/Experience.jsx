@@ -16,8 +16,21 @@ export default function ExperienceSection({experience, setExperience, expArray, 
         })
     }
 
-    function handleSubmit(e){
+    const [errorMsg, setErrorMsg] = useState("")
+
+    function validate(e){
         e.preventDefault();
+
+        if((experience.jobTitle === "") || (experience.company === "") || (experience.description === "")){
+            setErrorMsg("Please complete all form fields")
+        } else if (experience.startDate >= experience.endDate){
+            setErrorMsg("End date must be later than start date")
+        } else {
+            setErrorMsg("")
+            handleSubmit()
+        }
+    }
+    function handleSubmit(){
         // if statemenet to check if the form is Editing an existing experience.
         // if experience.id matches an element with the same id in the submitted info array,
         if (expArray.find((element) => element.id == experience.id)){
@@ -50,7 +63,7 @@ export default function ExperienceSection({experience, setExperience, expArray, 
             <button onClick={toggleForm}>Add Experience</button>
         }
         {showExpForm && 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={validate}>
             <label>
                 Job Title:
                 <input 
@@ -96,6 +109,8 @@ export default function ExperienceSection({experience, setExperience, expArray, 
                     onChange={handleChange}
                 />
             </label>
+            <div className="error">{errorMsg}</div>
+
             <button>Submit</button>
         </form>
         }

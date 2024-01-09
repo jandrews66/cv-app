@@ -13,9 +13,21 @@ export default function EducationSection({education, setEducation, eduArray, set
         [e.target.name]: e.target.value
         })
     }
+    const [errorMsg, setErrorMsg] = useState("")
 
-    function handleSubmit(e){
+    function validate(e){
         e.preventDefault();
+
+        if((education.type === "") || (education.institution === "") || (education.grade === "")){
+            setErrorMsg("Please complete all form fields")
+        } else if (education.startDate >= education.endDate){
+            setErrorMsg("End date must be later than start date")
+        } else {
+            setErrorMsg("")
+            handleSubmit()
+        }
+    }
+    function handleSubmit(){
         // if statemenet to check if the form is Editing an existing education.
         // if education.id matches an element with the same id in the submitted info array,
         if (eduArray.find((element) => element.id == education.id)){
@@ -47,7 +59,7 @@ export default function EducationSection({education, setEducation, eduArray, set
             <button onClick={toggleForm}>Add Education</button>
         }
         {showEduForm && 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={validate}>
             <label>
                 Type of Education:
                 <input 
@@ -93,6 +105,7 @@ export default function EducationSection({education, setEducation, eduArray, set
                     onChange={handleChange}
                 />
             </label>
+            <div className="error">{errorMsg}</div>
             <button>Submit</button>
         </form>
         }
