@@ -5,6 +5,7 @@ import './App.css'
 import InfoForm from './Info'
 import ExperienceSection from './Experience'
 import EducationSection from './Education'
+import GenericPdfDownloader from './PdfDownloader';
 
 function App() {
 
@@ -103,7 +104,7 @@ function App() {
         <ExperienceSection experience={experience} setExperience={setExperience} expArray={expArray} setExpArray={setExpArray} showExpForm={showExpForm} setShowExpForm={setShowExpForm}/>
         <EducationSection education={education} setEducation={setEducation} eduArray={eduArray} setEduArray={setEduArray} showEduForm={showEduForm} setShowEduForm={setShowEduForm}/>
       </div>
-      <div className="previewSection">
+      <div id ="preview" className="previewSection">
         {!!user.isSubmitted && (
           <div className="header">
             <h1>{user.fullName}</h1>
@@ -175,8 +176,11 @@ function App() {
         })}
         </ul>
       </div>
+      <GenericPdfDownloader 
+          downloadFileName="myCV"
+          rootElementId="preview" 
+        />
     </div>
-
   )
 }
 
