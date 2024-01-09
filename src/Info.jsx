@@ -39,10 +39,13 @@ export default function InfoForm({ user, setUser }) {
 
     return (
         <>
+            <h1>Personal Info</h1>
+
             {!editMode &&
                 <button onClick={toggleEdit}>Add Info</button>
             }
             {editMode &&
+            
                 <form onSubmit={handleSubmit}>
                     <label>
                         Full Name:

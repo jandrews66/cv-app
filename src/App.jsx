@@ -78,39 +78,50 @@ function App() {
   return (
     <div className="container">
       <div className="inputSection">
-        <h1>CV Generator</h1>
         <InfoForm user={user} setUser={setUser} />
         <ExperienceSection experience={experience} setExperience={setExperience} expArray={expArray} setExpArray={setExpArray} showExpForm={showExpForm} setShowExpForm={setShowExpForm}/>
         <EducationSection education={education} setEducation={setEducation} eduArray={eduArray} setEduArray={setEduArray} showEduForm={showEduForm} setShowEduForm={setShowEduForm}/>
       </div>
       <div className="previewSection">
         {!!user.isSubmitted && (
+          <div className="header">
+            <h1>{user.fullName}</h1>
+            <p>{user.email} {user.telephone}</p>
+          </div>
+          )}
+          <h2>Professional Experience</h2>
           <ul>
-            {Object.values(user).map((info, index) => {
-              return <li key={index}>{info}</li>;
+            {expArray
+            //sort job experiences from most recent to least recent
+              .sort((a, b) => (b.endDate > a.endDate) ? 1 : (b.endDate < a.endDate) ? -1 : 0)
+              //render experiences
+              .map((info) => {
+                return <li key={info.id}>
+                  <div className="content">
+                    <div className="topSection">
+                      <p><span className="boldText">{info.jobTitle}, </span><span className="italicText">{info.company}</span></p>
+                      <p>From {reverseString(`${info.startDate}`)} to {reverseString(`${info.endDate}`)}</p>
+                    </div>
+
+                      {/* render line breaks from description text area*/}
+                      <p>{info.description.split("\n").map(function(item, index){
+                          return (
+                              <span key={index}>
+                                  {item}
+                                  <br/>
+                              </span>
+                          )
+                    })}</p>
+                    <div className="btnContainer">
+                      <button type='button' onClick={() => handleEdit(info.id)}>Edit</button>
+                      <button type='button' onClick={() => handleRemove(info.id)}>Remove</button>
+                    </div>
+
+                </div>
+              </li>;
             })}
-          </ul>)}
-          {expArray
-          //sort job experiences from most recent to least recent
-            .sort((a, b) => (b.endDate > a.endDate) ? 1 : (b.endDate < a.endDate) ? -1 : 0)
-            //render experiences
-            .map((info) => {
-              return <li key={info.id}>
-                <p>{info.jobTitle} at {info.company}</p>
-                <p>From {reverseString(`${info.startDate}`)} to {reverseString(`${info.endDate}`)}</p>
-                {/* render line breaks from description text area*/}
-                <p>{info.description.split("\n").map(function(item, index){
-                    return (
-                        <span key={index}>
-                            {item}
-                            <br/>
-                        </span>
-                    )
-              })}</p>
-              <button type='button' onClick={() => handleEdit(info.id)}>Edit</button>
-              <button type='button' onClick={() => handleRemove(info.id)}>Remove</button>
-            </li>;
-        })}
+          </ul>
+        <h2>Education</h2>
         <ul>
         {eduArray
         //sort education from most recent to least recent
@@ -118,12 +129,18 @@ function App() {
         //render education
         .map((info) => {
             return <li key={info.id}>
-                <p>{info.type} at {info.institution}</p>
+              <div className="content">
+                <div className="topSection">
+                  <p><span className="boldText">{info.type}, </span><span className="italicText">{info.institution}</span></p>
+                  <p>From {reverseString(`${info.startDate}`)} to {reverseString(`${info.endDate}`)}</p>
+                </div>
                 <p>{info.grade}</p>
-                <p>From {reverseString(`${info.startDate}`)} to {reverseString(`${info.endDate}`)}</p>
-                {/* render line breaks from description text area*/}
-                <button type='button' onClick={() => handleEduEdit(info.id)}>Edit</button>
-                <button type='button' onClick={() => handleEduRemove(info.id)}>Remove</button>
+                <div className="btnContainer">
+                  <button type='button' onClick={() => handleEduEdit(info.id)}>Edit</button>
+                  <button type='button' onClick={() => handleEduRemove(info.id)}>Remove</button>
+                </div>
+              </div>
+
             </li>;
         })}
         </ul>
