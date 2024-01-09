@@ -12,6 +12,7 @@ function App() {
     fullName: "",
     email: "",
     telephone: "",
+    address: "",
     isSubmitted: false,
   })
 
@@ -86,7 +87,7 @@ function App() {
         {!!user.isSubmitted && (
           <div className="header">
             <h1>{user.fullName}</h1>
-            <p>{user.email} {user.telephone}</p>
+            <p><span>{user.email}</span><span>{user.telephone}</span><span>{user.address}</span></p>
           </div>
           )}
           <h2>Professional Experience</h2>

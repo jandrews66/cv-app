@@ -76,6 +76,16 @@ export default function InfoForm({ user, setUser }) {
 
                         />
                     </label>
+                    <label>
+                        Address:
+                        <input
+                            name="address"
+                            type="text"
+                            value={user.address}
+                            onChange={handleChange}
+
+                        />
+                    </label>
                     <button>Submit</button>
                 </form>
             }

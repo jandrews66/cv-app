@@ -31,6 +31,17 @@
   font-size: 0.75em;
 }
 
+.header{
+  display: flex;
+  flex-direction: column;
+  margin: 1em;
+}
+
+.header > p{
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
 .inputSection > *{
   margin: 1em;
 }
