@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function InfoForm({ user, setUser }) {
+export default function InfoForm({ user, setUser, showInfoForm, setShowInfoForm }) {
 
     //    moved to higher level 
     //    const [user, setUser] = useState({
@@ -12,10 +12,9 @@ export default function InfoForm({ user, setUser }) {
     // using an isSubmitted value in state now - works for this use case - but ususally form submissions would be storing data/redirecting somewhere etc...
     // const [submittedInfo, setSubmittedInfo] = useState([user.fullName, user.email, user.telephone])
 
-    const [editMode, setEditMode] = useState(false)
 
     function toggleEdit() {
-        setEditMode(!editMode)
+        setShowInfoForm(!showInfoForm)
     }
 
     function handleChange(e) {
@@ -41,10 +40,10 @@ export default function InfoForm({ user, setUser }) {
         <>
             <h1>Personal Info</h1>
 
-            {!editMode &&
+            {!showInfoForm &&
                 <button onClick={toggleEdit}>Add Info</button>
             }
-            {editMode &&
+            {showInfoForm &&
             
                 <form onSubmit={handleSubmit}>
                     <label>

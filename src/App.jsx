@@ -16,7 +16,22 @@ function App() {
     isSubmitted: false,
   })
 
+  const [showInfoForm, setShowInfoForm] = useState(false)
 
+
+  function handleInfoEdit(){
+    setShowInfoForm(true)
+    } 
+  
+    function handleInfoRemove(){
+      setUser({
+        fullName: "",
+        email: "",
+        telephone: "",
+        address: "",
+        isSubmitted: false,
+      })
+    }
   const [experience, setExperience] = useState({
     //give each experience a unique id
     id: uuidv4(),
@@ -79,7 +94,7 @@ function App() {
   return (
     <div className="container">
       <div className="inputSection">
-        <InfoForm user={user} setUser={setUser} />
+        <InfoForm user={user} setUser={setUser} showInfoForm={showInfoForm} setShowInfoForm={setShowInfoForm} />
         <ExperienceSection experience={experience} setExperience={setExperience} expArray={expArray} setExpArray={setExpArray} showExpForm={showExpForm} setShowExpForm={setShowExpForm}/>
         <EducationSection education={education} setEducation={setEducation} eduArray={eduArray} setEduArray={setEduArray} showEduForm={showEduForm} setShowEduForm={setShowEduForm}/>
       </div>
@@ -88,6 +103,10 @@ function App() {
           <div className="header">
             <h1>{user.fullName}</h1>
             <p><span>{user.email}</span><span>{user.telephone}</span><span>{user.address}</span></p>
+            <div className="btnContainer">
+                  <button type='button' onClick={() => handleInfoEdit()}>Edit</button>
+                  <button type='button' onClick={() => handleInfoRemove()}>Remove</button>
+                </div>
           </div>
           )}
           <h2>Professional Experience</h2>
