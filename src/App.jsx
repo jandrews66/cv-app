@@ -22,6 +22,8 @@ function App() {
 
   function handleInfoEdit(){
     setShowInfoForm(true)
+
+
     } 
   
     function handleInfoRemove(){
@@ -55,6 +57,7 @@ function App() {
 
   function handleEdit(selectedId){
   setShowExpForm(true)
+
   let obj = expArray.filter(info => info.id == selectedId)
   setExperience(obj[0])
   } 
@@ -82,6 +85,7 @@ function App() {
 
 
   function handleEduEdit(selectedId){
+    setShowEduForm(true)
     let obj = eduArray.filter(info => info.id == selectedId)
     setEducation(obj[0])
 } 
@@ -110,7 +114,10 @@ function App() {
                 </div>
           </div>
           )}
-          <h2>Professional Experience</h2>
+          {expArray.length > 0 &&
+          //show heading if an Experience has been added to the array
+            <h2>Professional Experience</h2>
+          }
           <ul>
             {expArray
             //sort job experiences from most recent to least recent
@@ -142,7 +149,9 @@ function App() {
               </li>;
             })}
           </ul>
-        <h2>Education</h2>
+        {eduArray.length > 0 &&
+          <h2>Education</h2>
+        }
         <ul>
         {eduArray
         //sort education from most recent to least recent

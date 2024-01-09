@@ -28,6 +28,11 @@
   border: 2px solid green;
   width: 100%;
   font-size: 0.75em;
+
+}
+
+.previewSection > * {
+  margin: 0 2em;
 }
 
 .inputSection{
@@ -38,7 +43,7 @@
 .header{
   display: flex;
   flex-direction: column;
-  margin: 1em;
+  margin: 2em;
 }
 
 .header > p{
