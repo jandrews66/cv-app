@@ -97,6 +97,9 @@ function App() {
     //change the state of submitted info to render the new list
     setEduArray(newList);
   }
+
+  const [showBtns, setShowBtns] = useState(true)
+
   return (
     <div className="container">
       <div className="inputSection">
@@ -104,17 +107,21 @@ function App() {
         <ExperienceSection experience={experience} setExperience={setExperience} expArray={expArray} setExpArray={setExpArray} showExpForm={showExpForm} setShowExpForm={setShowExpForm}/>
         <EducationSection education={education} setEducation={setEducation} eduArray={eduArray} setEduArray={setEduArray} showEduForm={showEduForm} setShowEduForm={setShowEduForm}/>
       </div>
-      <div id ="preview" className="previewSection">
+      <div className="previewSection">
+      <ul>
         {!!user.isSubmitted && (
           <div className="header">
             <h1>{user.fullName}</h1>
             <p><span>{user.email}</span><span>{user.telephone}</span><span>{user.address}</span></p>
-            <div className="btnContainer">
+            {showBtns &&
+                <div className="btnContainer">
                   <button type='button' onClick={() => handleInfoEdit()}>Edit</button>
-                  <button type='button' onClick={() => handleInfoRemove()}>Remove</button>
+                   <button type='button' onClick={() => handleInfoRemove()}>Remove</button>
                 </div>
+            }
           </div>
           )}
+        </ul>
           {expArray.length > 0 &&
           //show heading if an Experience has been added to the array
             <h2>Professional Experience</h2>
@@ -141,10 +148,12 @@ function App() {
                               </span>
                           )
                     })}</p>
-                    <div className="btnContainer">
-                      <button type='button' onClick={() => handleEdit(info.id)}>Edit</button>
-                      <button type='button' onClick={() => handleRemove(info.id)}>Remove</button>
-                    </div>
+            {showBtns &&
+                <div className="btnContainer">
+                  <button type='button' onClick={() => handleEdit(info.id)}>Edit</button>
+                   <button type='button' onClick={() => handleRemove(info.id)}>Remove</button>
+                </div>
+            }
 
                 </div>
               </li>;
@@ -166,10 +175,12 @@ function App() {
                   <p>From {reverseString(`${info.startDate}`)} to {reverseString(`${info.endDate}`)}</p>
                 </div>
                 <p>{info.grade}</p>
+                {showBtns &&
                 <div className="btnContainer">
                   <button type='button' onClick={() => handleEduEdit(info.id)}>Edit</button>
                   <button type='button' onClick={() => handleEduRemove(info.id)}>Remove</button>
                 </div>
+            }
               </div>
 
             </li>;
@@ -179,6 +190,8 @@ function App() {
       <GenericPdfDownloader 
           downloadFileName="myCV"
           rootElementId="preview" 
+          showBtns={showBtns}
+          setShowBtns={setShowBtns}
         />
     </div>
   )

@@ -1,9 +1,10 @@
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 
-const GenericPdfDownloader = ({rootElementId , downloadFileName}) => {
+const GenericPdfDownloader = ({rootElementId , downloadFileName , showBtns, setShowBtns}) => {
 
     const downloadPdfDocument = () => {
+
         const input = document.getElementById(rootElementId);
         html2canvas(input)
             .then((canvas) => {
@@ -14,7 +15,15 @@ const GenericPdfDownloader = ({rootElementId , downloadFileName}) => {
             })
     }
 
-    return <button onClick={downloadPdfDocument}>Download PDF</button>
+    const toggleBtns = () =>{
+        setShowBtns(!showBtns)
+    }
+
+    
+
+    return (
+    <button onClick={downloadPdfDocument} onMouseEnter={toggleBtns} onMouseLeave={toggleBtns}>Download PDF</button>
+    )
 
 }
 

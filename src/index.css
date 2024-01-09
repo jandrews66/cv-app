@@ -115,6 +115,7 @@ button:focus-visible {
 
 li {
   list-style: none;
+
 }
 
 .content {
@@ -148,7 +149,7 @@ h2 {
 .btnContainer {
   display: flex;
   align-items: flex-end;
-  justify-content: flex-end;
+  justify-content: flex-end; 
 }
 
 .btnContainer > button {
@@ -157,6 +158,10 @@ h2 {
   color: red;
   padding: 0;
   margin-left: 1em;
+}
+
+.hide {
+  color: transparent
 }
 
 .error {
