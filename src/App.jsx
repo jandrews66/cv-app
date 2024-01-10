@@ -7,6 +7,12 @@ import ExperienceSection from './Experience'
 import EducationSection from './Education'
 import GenericPdfDownloader from './PdfDownloader';
 
+import { FiDelete } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
+
+
+
+
 function App() {
 
   const [user, setUser] = useState({
@@ -100,6 +106,7 @@ function App() {
 
   const [showBtns, setShowBtns] = useState(true)
 
+
   return (
     <div className="container">
       <div className="inputSection">
@@ -111,12 +118,14 @@ function App() {
       <ul>
         {!!user.isSubmitted && (
           <div className="header">
-            <h1>{user.fullName}</h1>
-            <p><span>{user.email}</span><span>{user.telephone}</span><span>{user.address}</span></p>
+            <div className="personalInfo">
+              <h1>{user.fullName}</h1>
+              <p><span>{user.email}</span><span>{user.telephone}</span><span>{user.address}</span></p>
+            </div>
             {showBtns &&
                 <div className="btnContainer">
-                  <button type='button' onClick={() => handleInfoEdit()}>Edit</button>
-                   <button type='button' onClick={() => handleInfoRemove()}>Remove</button>
+                  <button type='button' onClick={() => handleInfoEdit()}><FiEdit /></button>
+                   <button type='button' onClick={() => handleInfoRemove()}><FiDelete /></button>
                 </div>
             }
           </div>
@@ -125,6 +134,7 @@ function App() {
           {expArray.length > 0 &&
           //show heading if an Experience has been added to the array
             <h2>Professional Experience</h2>
+            
           }
           <ul>
             {expArray
@@ -133,7 +143,9 @@ function App() {
               //render experiences
               .map((info) => {
                 return <li key={info.id}>
-                  <div className="content">
+
+                  {/* <div className="experience"> */}
+                    <div className="content">
                     <div className="topSection">
                       <p><span className="boldText">{info.jobTitle}, </span><span className="italicText">{info.company}</span></p>
                       <p>From {reverseString(`${info.startDate}`)} to {reverseString(`${info.endDate}`)}</p>
@@ -148,14 +160,16 @@ function App() {
                               </span>
                           )
                     })}</p>
-            {showBtns &&
-                <div className="btnContainer">
-                  <button type='button' onClick={() => handleEdit(info.id)}>Edit</button>
-                   <button type='button' onClick={() => handleRemove(info.id)}>Remove</button>
-                </div>
-            }
+                    </div>
 
-                </div>
+                    {showBtns &&
+                      <div className="btnContainer">
+                        <button type='button' onClick={() => handleEdit(info.id)}><FiEdit /></button>
+                        <button type='button' onClick={() => handleRemove(info.id)}><FiDelete /></button>
+                      </div>
+                    }
+
+                {/* </div> */}
               </li>;
             })}
           </ul>
@@ -175,13 +189,14 @@ function App() {
                   <p>From {reverseString(`${info.startDate}`)} to {reverseString(`${info.endDate}`)}</p>
                 </div>
                 <p>{info.grade}</p>
+                </div>
+
                 {showBtns &&
                 <div className="btnContainer">
-                  <button type='button' onClick={() => handleEduEdit(info.id)}>Edit</button>
-                  <button type='button' onClick={() => handleEduRemove(info.id)}>Remove</button>
+                  <button type='button' onClick={() => handleEduEdit(info.id)}><FiEdit /></button>
+                  <button type='button' onClick={() => handleEduRemove(info.id)}><FiDelete /></button>
                 </div>
             }
-              </div>
 
             </li>;
         })}

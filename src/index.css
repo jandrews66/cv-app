@@ -27,6 +27,7 @@
 .previewSection{
   border: 2px solid green;
   width: 100%;
+  height: 90vh;
   font-size: 0.75em;
 
 }
@@ -41,12 +42,20 @@
 }
 
 .header{
-  display: flex;
-  flex-direction: column;
-  margin: 2em;
+  margin: 1em 0;
+  display: grid;
+  grid-template-columns: 10fr 1fr;
 }
 
-.header > p{
+.personalInfo {
+  display: grid;
+  grid-column: 1 / 2;
+  
+}
+
+
+
+.personalInfo > p{
   display: flex;
   justify-content: center;
   gap: 1em;
@@ -118,11 +127,17 @@ li {
 
 }
 
+li {
+  display: grid;
+  grid-template-columns: 10fr 1fr;
+  margin-top: 1em;
+}
+
 .content {
+  display: grid;
+  grid-column: 1/2;
   text-align: left;
-  margin: 2em;
-  display: flex;
-  flex-direction: column;
+
 }
 
 .topSection {
@@ -147,17 +162,21 @@ h2 {
 }
 
 .btnContainer {
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end; 
+  /* display: grid; */
+  grid-column: 2/3;
+  text-align: right;
+
+  
 }
 
 .btnContainer > button {
-  background-color: transparent;
   border: none;
-  color: red;
+  outline: none;
+  color: rgb(179, 4, 4);
+  background-color: transparent;
+  font-size: 1rem;
   padding: 0;
-  margin-left: 1em;
+  margin: 0 0 0 2px;
 }
 
 .hide {
