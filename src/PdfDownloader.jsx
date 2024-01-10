@@ -1,7 +1,7 @@
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 
-const GenericPdfDownloader = ({rootElementId , downloadFileName , showBtns, setShowBtns}) => {
+const GenericPdfDownloader = ({rootElementId , downloadFileName , setShowBtns}) => {
 
     const downloadPdfDocument = () => {
 
@@ -10,19 +10,22 @@ const GenericPdfDownloader = ({rootElementId , downloadFileName , showBtns, setS
             .then((canvas) => {
                 const imgData = canvas.toDataURL('image/png');
                 const pdf = new jsPDF();
-                pdf.addImage(imgData, 'JPEG', 0, 0);
+                pdf.addImage(imgData, 'JPEG', 10, 0);
                 pdf.save(`${downloadFileName}.pdf`);
             })
     }
 
-    const toggleBtns = () =>{
-        setShowBtns(!showBtns)
+    const hideBtns = () =>{
+        setShowBtns(false)
     }
 
+    const displayBtns = () =>{
+        setShowBtns(true)
+    }
     
 
     return (
-    <button id="downloadBtn" onClick={downloadPdfDocument} onMouseEnter={toggleBtns} onMouseLeave={toggleBtns}>Download PDF</button>
+    <button id="downloadBtn" onClick={downloadPdfDocument} onMouseEnter={hideBtns} onMouseLeave={displayBtns}>Download PDF</button>
     )
 
 }

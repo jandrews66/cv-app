@@ -4,7 +4,7 @@
 }
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Iner, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light;
@@ -27,7 +27,6 @@
   width: 100%;
   height: 100vh;
   font-size: 0.75em;
-  border: 2px solid darkred;
 
 
 }
@@ -41,11 +40,11 @@
   background-color: rgb(234, 234, 234);
   display: flex;
   flex-direction: column;
+  border-right: 2px solid darkred;
 
 }
 
 .inputSection > button{
-  width: 30%;
   align-self: center;
 }
 
@@ -80,7 +79,8 @@ form > label {
   display: flex;
   flex-direction: column;
   text-align: left;
-  padding: 0 50px;
+  font-size: 15px;
+  padding: 2px 50px;
 
 }
 
@@ -118,7 +118,7 @@ button {
   background-color: rgb(151, 185, 181);
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  padding: 0.5em 1em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
