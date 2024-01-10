@@ -3,11 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { format, parse } from 'date-fns';
 
 
-export default function ExperienceSection({experience, setExperience, expArray, setExpArray, showExpForm, setShowExpForm}){
-
-   function toggleForm(){
-        setShowExpForm(!showExpForm)
-   }
+export default function ExperienceSection({experience, setExperience, expArray, setExpArray, isActive, setIsActive}){
 
    function handleChange(e){
     setExperience({
@@ -51,71 +47,72 @@ export default function ExperienceSection({experience, setExperience, expArray, 
             endDate: "",
             description: ""
         })
-        toggleForm();
+        setIsActive("")
     }
 
+    function Form({onShow}){
+        if(isActive === 2){
+            return (
+                <form onSubmit={validate}>
+                <label>
+                    Job Title:
+                    <input 
+                        name="jobTitle"
+                        type="text"
+                        value={experience.jobTitle}
+                        onChange={handleChange}
+                    />
+                </label>
+                <label>
+                    Company:
+                    <input 
+                        name="company"
+                        type="text"
+                        value={experience.company}
+                        onChange={handleChange}
+                    />
+                </label>
+                <label>
+                    Start Date:
+                    <input 
+                        name="startDate"
+                        type="date"
+                        value={experience.startDate}
+                        onChange={handleChange}
+                    />
+                </label>
+                <label>
+                    End Date:
+                    <input 
+                        name="endDate"
+                        type="date"
+                        value={experience.endDate}
+                        onChange={handleChange}
+                    />
+                </label>
+                <label>
+                    Description:
+                    <textarea 
+                        name="description"
+                        type="text"
+                        value={experience.description}
+                        onChange={handleChange}
+                    />
+                </label>
+                <div className="error">{errorMsg}</div>
 
+                <button>Submit</button>
+            </form>
+            )
+        } else {
+            return <button onClick={onShow}>Add</button>
+        }
+    }
 
     return (
         <>
-        <h1>Experience</h1>
-        {!showExpForm &&
-            <button onClick={toggleForm}>Add Experience</button>
-        }
-        {showExpForm && 
-            <form onSubmit={validate}>
-            <label>
-                Job Title:
-                <input 
-                    name="jobTitle"
-                    type="text"
-                    value={experience.jobTitle}
-                    onChange={handleChange}
-                />
-            </label>
-            <label>
-                Company:
-                <input 
-                    name="company"
-                    type="text"
-                    value={experience.company}
-                    onChange={handleChange}
-                />
-            </label>
-            <label>
-                Start Date:
-                <input 
-                    name="startDate"
-                    type="date"
-                    value={experience.startDate}
-                    onChange={handleChange}
-                />
-            </label>
-            <label>
-                End Date:
-                <input 
-                    name="endDate"
-                    type="date"
-                    value={experience.endDate}
-                    onChange={handleChange}
-                />
-            </label>
-            <label>
-                Description:
-                <textarea 
-                    name="description"
-                    type="text"
-                    value={experience.description}
-                    onChange={handleChange}
-                />
-            </label>
-            <div className="error">{errorMsg}</div>
-
-            <button>Submit</button>
-        </form>
-        }
-
-
+        <h3>Experience</h3>
+        <Form onShow={() => setIsActive(2)}/>
         </>
         
     )

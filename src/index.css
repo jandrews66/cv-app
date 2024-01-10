@@ -21,14 +21,14 @@
   height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  border: 2px solid red;
 }
 
 .previewSection{
-  border: 2px solid green;
   width: 100%;
-  height: 90vh;
+  height: 100vh;
   font-size: 0.75em;
+  border: 2px solid darkred;
+
 
 }
 
@@ -37,10 +37,24 @@
 }
 
 .inputSection{
+  padding-top: 1em;
   background-color: rgb(234, 234, 234);
+  display: flex;
+  flex-direction: column;
 
 }
 
+.inputSection > button{
+  width: 30%;
+  align-self: center;
+}
+
+#downloadBtn{
+  margin-top: auto;
+  margin-bottom: 20px;
+  background-color:rgb(179, 4, 4);
+  color: white;
+}
 .header{
   margin: 1em 0;
   display: grid;
@@ -60,11 +74,7 @@
   justify-content: center;
   gap: 1em;
 }
-.inputSection > *{
-  margin: 1em 2em;
 
-
-}
 
 form > label {
   display: flex;
@@ -100,7 +110,9 @@ body {
 
 h1 {
   font-size: 1.5em;
+  margin-bottom: 1em;
 }
+
 
 button {
   background-color: rgb(151, 185, 181);
@@ -122,15 +134,14 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-li {
-  list-style: none;
-
+ul {
 }
 
 li {
+  list-style: none;
   display: grid;
   grid-template-columns: 10fr 1fr;
-  margin-top: 1em;
+  margin: 1em 0 1em 2em;
 }
 
 .content {
@@ -158,11 +169,9 @@ li {
 h2 {
   text-align: left;
   text-decoration: underline;
-  margin-left: 1em;
 }
 
 .btnContainer {
-  /* display: grid; */
   grid-column: 2/3;
   text-align: right;
 

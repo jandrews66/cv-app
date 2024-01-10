@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function InfoForm({ user, setUser, showInfoForm, setShowInfoForm }) {
+export default function InfoForm({ user, setUser, isActive, setIsActive }) {
 
     //    moved to higher level 
     //    const [user, setUser] = useState({
@@ -14,9 +14,6 @@ export default function InfoForm({ user, setUser, showInfoForm, setShowInfoForm 
 
     const [errorMsg, setErrorMsg] = useState("")
 
-    function toggleEdit() {
-        setShowInfoForm(!showInfoForm)
-    }
 
     function handleChange(e) {
         setUser({
@@ -34,67 +31,72 @@ export default function InfoForm({ user, setUser, showInfoForm, setShowInfoForm 
                 ...user,
                 isSubmitted: true,
             })
-            toggleEdit()
+            setIsActive("")
             setErrorMsg("")
 
         }
 
     }
 
+    function Form({onShow}){
+        if (isActive === 1){
+            return (
+                <form onSubmit={handleSubmit}>
+                <label>
+                    Full Name:
+                    <input
+                        name="fullName"
+                        type="text"
+                        value={user.fullName}
+                        onChange={handleChange}
+                    />
+                </label>
+                <label>
+                    Email:
+                    <input
+                        name="email"
+                        type="email"
+                        value={user.email}
+                        onChange={handleChange}
+
+                    />
+                </label>
+                <label>
+                    Telephone:
+                    <input
+                        name="telephone"
+                        type="text"
+                        value={user.telephone}
+                        onChange={handleChange}
+
+                    />
+                </label>
+                <label>
+                    Address:
+                    <input
+                        name="address"
+                        type="text"
+                        value={user.address}
+                        onChange={handleChange}
+
+                    />
+                </label>
+                <div className="error">{errorMsg}</div>
+
+                <button>Submit</button>
+            </form>
+            )
+        } else {
+            return <button onClick={onShow}>Add</button>
+
+        }
+    }
+
     return (
         <>
-            <h1>Personal Info</h1>
-
-            {!showInfoForm &&
-                <button onClick={toggleEdit}>Add Info</button>
-            }
-            {showInfoForm &&
-            
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        Full Name:
-                        <input
-                            name="fullName"
-                            type="text"
-                            value={user.fullName}
-                            onChange={handleChange}
-                        />
-                    </label>
-                    <label>
-                        Email:
-                        <input
-                            name="email"
-                            type="email"
-                            value={user.email}
-                            onChange={handleChange}
-
-                        />
-                    </label>
-                    <label>
-                        Telephone:
-                        <input
-                            name="telephone"
-                            type="text"
-                            value={user.telephone}
-                            onChange={handleChange}
-
-                        />
-                    </label>
-                    <label>
-                        Address:
-                        <input
-                            name="address"
-                            type="text"
-                            value={user.address}
-                            onChange={handleChange}
-
-                        />
-                    </label>
-                    <div className="error">{errorMsg}</div>
-
-                    <button>Submit</button>
-                </form>
-            }
+            <h3>Personal Info</h3>
+            {/* pass onclick function through as a prop otherwise it will be called in render */}
+            <Form onShow={() => setIsActive(1)}/>
         </>
 
     )

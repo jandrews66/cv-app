@@ -1,11 +1,7 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-export default function EducationSection({education, setEducation, eduArray, setEduArray, showEduForm, setShowEduForm}){
-
-   function toggleForm(){
-        setShowEduForm(!showEduForm)
-   }
+export default function EducationSection({education, setEducation, eduArray, setEduArray, isActive, setIsActive}){
 
    function handleChange(e){
     setEducation({
@@ -48,68 +44,71 @@ export default function EducationSection({education, setEducation, eduArray, set
             endDate: "",
             grade: ""
         })
-        toggleForm();
+        setIsActive("")
 
     }
 
+    function Form({onShow}){
+        if(isActive === 3){
+            return (
+                <form onSubmit={validate}>
+                <label>
+                    Type of Education:
+                    <input 
+                        name="type"
+                        type="text"
+                        value={education.type}
+                        onChange={handleChange}
+                    />
+                </label>
+                <label>
+                    Insitution:
+                    <input 
+                        name="institution"
+                        type="text"
+                        value={education.institution}
+                        onChange={handleChange}
+                    />
+                </label>
+                <label>
+                    Start Date:
+                    <input 
+                        name="startDate"
+                        type="date"
+                        value={education.startDate}
+                        onChange={handleChange}
+                    />
+                </label>
+                <label>
+                    End Date:
+                    <input 
+                        name="endDate"
+                        type="date"
+                        value={education.endDate}
+                        onChange={handleChange}
+                    />
+                </label>
+                <label>
+                    Grade / Level:
+                    <input 
+                        name="grade"
+                        type="text"
+                        value={education.grade}
+                        onChange={handleChange}
+                    />
+                </label>
+                <div className="error">{errorMsg}</div>
+                <button>Submit</button>
+            </form>
+            )
+        } else {
+            return <button onClick={onShow}>Add</button>
+        }
+    }
     return (
         <>
-        <h1>Education</h1>
-        {!showEduForm &&
-            <button onClick={toggleForm}>Add Education</button>
-        }
-        {showEduForm && 
-            <form onSubmit={validate}>
-            <label>
-                Type of Education:
-                <input 
-                    name="type"
-                    type="text"
-                    value={education.type}
-                    onChange={handleChange}
-                />
-            </label>
-            <label>
-                Insitution:
-                <input 
-                    name="institution"
-                    type="text"
-                    value={education.institution}
-                    onChange={handleChange}
-                />
-            </label>
-            <label>
-                Start Date:
-                <input 
-                    name="startDate"
-                    type="date"
-                    value={education.startDate}
-                    onChange={handleChange}
-                />
-            </label>
-            <label>
-                End Date:
-                <input 
-                    name="endDate"
-                    type="date"
-                    value={education.endDate}
-                    onChange={handleChange}
-                />
-            </label>
-            <label>
-                Grade / Level:
-                <input 
-                    name="grade"
-                    type="text"
-                    value={education.grade}
-                    onChange={handleChange}
-                />
-            </label>
-            <div className="error">{errorMsg}</div>
-            <button>Submit</button>
-        </form>
-        }
-        </>
-        
+        <h3>Education</h3>
+        <Form onShow={() => setIsActive(3)}/>
+        </>  
     )
 }

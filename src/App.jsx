@@ -11,8 +11,6 @@ import { FiDelete } from "react-icons/fi";
 import { FiEdit } from "react-icons/fi";
 
 
-
-
 function App() {
 
   const [user, setUser] = useState({
@@ -24,12 +22,11 @@ function App() {
     isValid: false
   })
 
-  const [showInfoForm, setShowInfoForm] = useState(false)
-
+  //use isActive to create an accordion for input forms. Info Form = 1, Exp Form = 2, Edu Form = 3
+  const [isActive, setIsActive] = useState("")
 
   function handleInfoEdit(){
-    setShowInfoForm(true)
-
+    setIsActive(1)
 
     } 
   
@@ -54,20 +51,16 @@ function App() {
 
   const [expArray, setExpArray] = useState([])
 
-  const [showExpForm, setShowExpForm] = useState(false)
-
-
   function reverseString(dateString){
     //change from YYYY-MM-DD to DD-MM-YYYY
     return dateString.split("-").reverse().join("-")
   }
 
   function handleEdit(selectedId){
-  setShowExpForm(true)
-
-  let obj = expArray.filter(info => info.id == selectedId)
-  setExperience(obj[0])
-  } 
+    setIsActive(2)
+    let obj = expArray.filter(info => info.id == selectedId)
+    setExperience(obj[0])
+    } 
 
   function handleRemove(selectedId){
   // create a new list which does not contain the Item matching the selected Id 
@@ -88,14 +81,12 @@ function App() {
   })
 
   const [eduArray, setEduArray] = useState([])
-  const [showEduForm, setShowEduForm] = useState(false)
-
 
   function handleEduEdit(selectedId){
-    setShowEduForm(true)
+    setIsActive(3)
     let obj = eduArray.filter(info => info.id == selectedId)
     setEducation(obj[0])
-} 
+  } 
 
   function handleEduRemove(selectedId){
     // create a new list which does not contain the Item matching the selected Id 
@@ -110,11 +101,18 @@ function App() {
   return (
     <div className="container">
       <div className="inputSection">
-        <InfoForm user={user} setUser={setUser} showInfoForm={showInfoForm} setShowInfoForm={setShowInfoForm} />
-        <ExperienceSection experience={experience} setExperience={setExperience} expArray={expArray} setExpArray={setExpArray} showExpForm={showExpForm} setShowExpForm={setShowExpForm}/>
-        <EducationSection education={education} setEducation={setEducation} eduArray={eduArray} setEduArray={setEduArray} showEduForm={showEduForm} setShowEduForm={setShowEduForm}/>
+        <h1>CV Generator</h1>
+        <InfoForm user={user} setUser={setUser} isActive={isActive} setIsActive={setIsActive} />
+        <ExperienceSection experience={experience} setExperience={setExperience} expArray={expArray} setExpArray={setExpArray} isActive={isActive} setIsActive={setIsActive}/>
+        <EducationSection education={education} setEducation={setEducation} eduArray={eduArray} setEduArray={setEduArray} isActive={isActive} setIsActive={setIsActive}/>
+        <GenericPdfDownloader 
+          downloadFileName="myCV"
+          rootElementId="preview" 
+          showBtns={showBtns}
+          setShowBtns={setShowBtns}
+        />
       </div>
-      <div className="previewSection">
+      <div id="preview" className="previewSection">
       <ul>
         {!!user.isSubmitted && (
           <div className="header">
@@ -143,8 +141,6 @@ function App() {
               //render experiences
               .map((info) => {
                 return <li key={info.id}>
-
-                  {/* <div className="experience"> */}
                     <div className="content">
                     <div className="topSection">
                       <p><span className="boldText">{info.jobTitle}, </span><span className="italicText">{info.company}</span></p>
@@ -168,8 +164,6 @@ function App() {
                         <button type='button' onClick={() => handleRemove(info.id)}><FiDelete /></button>
                       </div>
                     }
-
-                {/* </div> */}
               </li>;
             })}
           </ul>
@@ -202,12 +196,6 @@ function App() {
         })}
         </ul>
       </div>
-      <GenericPdfDownloader 
-          downloadFileName="myCV"
-          rootElementId="preview" 
-          showBtns={showBtns}
-          setShowBtns={setShowBtns}
-        />
     </div>
   )
 }

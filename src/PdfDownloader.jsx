@@ -22,7 +22,7 @@ const GenericPdfDownloader = ({rootElementId , downloadFileName , showBtns, setS
     
 
     return (
-    <button onClick={downloadPdfDocument} onMouseEnter={toggleBtns} onMouseLeave={toggleBtns}>Download PDF</button>
+    <button id="downloadBtn" onClick={downloadPdfDocument} onMouseEnter={toggleBtns} onMouseLeave={toggleBtns}>Download PDF</button>
     )
 
 }
