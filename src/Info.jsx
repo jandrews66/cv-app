@@ -24,7 +24,7 @@ export default function InfoForm({ user, setUser, isActive, setIsActive }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        if ((user.fullName.length === 0) || (user.email.length === 0) || (user.telephone.length === 0) || (user.address.length === 0)){
+        if ((user.fullName.length === 0) || (user.email.length === 0) || (user.telephone.length === 0) || (user.address.length === 0)) {
             setErrorMsg("Please complete all form fields")
         } else {
             setUser({
@@ -38,10 +38,27 @@ export default function InfoForm({ user, setUser, isActive, setIsActive }) {
 
     }
 
-    function Form({onShow}){
-        if (isActive === 1){
-            return (
-                <form onSubmit={handleSubmit}>
+    return (
+        <>
+            <h3>Personal Info</h3>
+            {/* pass onclick function through as a prop otherwise it will be called in render */}
+            <Form
+                isActive={isActive}
+                handleSubmit={handleSubmit}
+                handleChange={handleChange}
+                onShow={() => setIsActive(1)}
+                user={user}
+                errorMsg={errorMsg}
+            />
+        </>
+
+    )
+}
+
+function Form({ isActive, handleSubmit, handleChange, onShow, user, errorMsg }) {
+    if (isActive === 1) {
+        return (
+            <form onSubmit={handleSubmit}>
                 <label>
                     Full Name:
                     <input
@@ -85,19 +102,9 @@ export default function InfoForm({ user, setUser, isActive, setIsActive }) {
 
                 <button>Submit</button>
             </form>
-            )
-        } else {
-            return <button onClick={onShow}>Add</button>
+        )
+    } else {
+        return <button onClick={onShow}>Add</button>
 
-        }
     }
-
-    return (
-        <>
-            <h3>Personal Info</h3>
-            {/* pass onclick function through as a prop otherwise it will be called in render */}
-            <Form onShow={() => setIsActive(1)}/>
-        </>
-
-    )
 }

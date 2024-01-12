@@ -1,40 +1,40 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { format, parse } from 'date-fns';
+// import { format, parse } from 'date-fns';
 
 
-export default function ExperienceSection({experience, setExperience, expArray, setExpArray, isActive, setIsActive}){
+export default function ExperienceSection({ experience, setExperience, expArray, setExpArray, isActive, setIsActive }) {
 
-   function handleChange(e){
-    setExperience({
-        ...experience,
-        [e.target.name]: e.target.value
+    function handleChange(e) {
+        setExperience({
+            ...experience,
+            [e.target.name]: e.target.value
         })
     }
 
     const [errorMsg, setErrorMsg] = useState("")
 
-    function validate(e){
+    function validate(e) {
         e.preventDefault();
 
-        if((experience.jobTitle === "") || (experience.company === "") || (experience.description === "")){
+        if ((experience.jobTitle === "") || (experience.company === "") || (experience.description === "")) {
             setErrorMsg("Please complete all form fields")
-        } else if (experience.startDate >= experience.endDate){
+        } else if (experience.startDate >= experience.endDate) {
             setErrorMsg("End date must be later than start date")
         } else {
             setErrorMsg("")
             handleSubmit()
         }
     }
-    function handleSubmit(){
+    function handleSubmit() {
         // if statemenet to check if the form is Editing an existing experience.
         // if experience.id matches an element with the same id in the submitted info array,
-        if (expArray.find((element) => element.id == experience.id)){
+        if (expArray.find((element) => element.id == experience.id)) {
             //create a new array without that element
-            const newList = expArray.filter((item)=> item.id !== experience.id);
+            const newList = expArray.filter((item) => item.id !== experience.id);
             //add the experience to the new array and render
             setExpArray([...newList, experience])
-        //else add the new experience to the exisiting submitted info array
+            //else add the new experience to the exisiting submitted info array
         } else {
             setExpArray([...expArray, experience])
         }
@@ -50,13 +50,29 @@ export default function ExperienceSection({experience, setExperience, expArray, 
         setIsActive("")
     }
 
-    function Form({onShow}){
-        if(isActive === 2){
-            return (
-                <form onSubmit={validate}>
+    return (
+        <>
+            <h3>Experience</h3>
+            <Form
+                isActive={isActive}
+                validate={validate}
+                experience={experience}
+                handleChange={handleChange}
+                onShow={() => setIsActive(2)}
+                errorMsg={errorMsg}
+            />
+        </>
+
+    )
+}
+
+function Form({ isActive, validate, experience, onShow, handleChange, errorMsg }) {
+    if (isActive === 2) {
+        return (
+            <form onSubmit={validate}>
                 <label>
                     Job Title:
-                    <input 
+                    <input
                         name="jobTitle"
                         type="text"
                         value={experience.jobTitle}
@@ -65,7 +81,7 @@ export default function ExperienceSection({experience, setExperience, expArray, 
                 </label>
                 <label>
                     Company:
-                    <input 
+                    <input
                         name="company"
                         type="text"
                         value={experience.company}
@@ -74,7 +90,7 @@ export default function ExperienceSection({experience, setExperience, expArray, 
                 </label>
                 <label>
                     Start Date:
-                    <input 
+                    <input
                         name="startDate"
                         type="date"
                         value={experience.startDate}
@@ -83,7 +99,7 @@ export default function ExperienceSection({experience, setExperience, expArray, 
                 </label>
                 <label>
                     End Date:
-                    <input 
+                    <input
                         name="endDate"
                         type="date"
                         value={experience.endDate}
@@ -92,7 +108,7 @@ export default function ExperienceSection({experience, setExperience, expArray, 
                 </label>
                 <label>
                     Description:
-                    <textarea 
+                    <textarea
                         name="description"
                         type="text"
                         value={experience.description}
@@ -103,17 +119,8 @@ export default function ExperienceSection({experience, setExperience, expArray, 
 
                 <button>Submit</button>
             </form>
-            )
-        } else {
-            return <button onClick={onShow}>Add</button>
-        }
+        )
+    } else {
+        return <button onClick={onShow}>Add</button>
     }
-
-    return (
-        <>
-        <h3>Experience</h3>
-        <Form onShow={() => setIsActive(2)}/>
-        </>
-        
-    )
 }
